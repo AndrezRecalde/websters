@@ -185,7 +185,6 @@ const WebsterTableConcejales = () => {
                 </Text>
                 <Group position="center">
                 <Badge
-                    sx={{ paddingLeft: 0 }}
                     size="lg"
                     radius="xl"
                     color="teal"
