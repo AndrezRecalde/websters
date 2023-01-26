@@ -17,7 +17,7 @@ import { useStatesStore } from "../../hooks/useStatesStore";
 import { useUiStore } from "../../hooks/useUiStore";
 
 import WebsterTableJuntas from "../table/WebsterTableJuntas";
-import { ModalHelp } from "../ui/modalHelp";
+import { ModalHelp } from "../ui/ModalHelp";
 
 const SearchJuntasPage = () => {
     const {

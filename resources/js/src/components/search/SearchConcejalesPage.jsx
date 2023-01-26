@@ -18,7 +18,8 @@ import { useUiStore } from "../../hooks/useUiStore";
 
 
 import WebsterTable from "../table/WebsterTableConcejales";
-import { ModalHelp } from "../ui/modalHelp";
+import { ModalHelp } from "../ui/ModalHelp";
+
 
 const SearchConcejalesPage = () => {
     const { cantones, startLoadCantonesUrbanos, startLoadCantonesRurales, startClearStates } = useStatesStore();
