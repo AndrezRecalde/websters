@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Table, Text, Title } from "@mantine/core";
+import { Badge, Group, Table, Text, Title } from "@mantine/core";
 import { useResultsStore } from "../../hooks/useResultsStore";
 
 const WebsterTableConcejales = () => {
@@ -20,7 +20,6 @@ const WebsterTableConcejales = () => {
     }, [resultsConcejales]);
 
     let funTotales = () => {
-
         resultsConcejales?.some((item) => {
             let div1 = item.total_votos;
             let div3 = parseFloat(item.total_votos / 3).toFixed(2);
@@ -184,6 +183,16 @@ const WebsterTableConcejales = () => {
                     {resultsConcejales[0].nombre_dignidad.toUpperCase()} -{" "}
                     {resultsConcejales[0].nombre_canton}
                 </Text>
+                <Group position="center">
+                <Badge
+                    sx={{ paddingLeft: 0 }}
+                    size="lg"
+                    radius="xl"
+                    color="teal"
+                >
+                    Total de candidatos a entrar: {resultsConcejales[0].cantidad}
+                </Badge>
+                </Group>
             </Title>
             <Table
                 mt="md"
