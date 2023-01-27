@@ -42,7 +42,6 @@ const SearchCandidato = () => {
             cod_parroquia: 0,
             cod_recinto: 0,
         },
-
         validate: {
             iddignidad: (value) =>
                 value === 0 || value === null
@@ -51,7 +50,7 @@ const SearchCandidato = () => {
         },
     });
 
-    const { iddignidad, cod_canton, cod_parroquia, cod_recinto } = form.values;
+    let { iddignidad, cod_canton, cod_parroquia, cod_recinto } = form.values;
 
     useEffect(() => {
         startLoadCantones();
@@ -89,18 +88,20 @@ const SearchCandidato = () => {
             !errors.hasOwnProperty("iddignidad") &&
             !errors.hasOwnProperty("cod_canton")
         ) {
-            if(iddignidad !== 0 && cod_canton === 0 && cod_parroquia === 0 && cod_recinto === 0){
-                console.log('Provinciales');
+            if(iddignidad !== 0 && (cod_canton === 0 || cod_canton === null) && (cod_parroquia === 0 || cod_parroquia === null) && (cod_recinto === 0 || cod_recinto === 0)){
+                //console.log('Provinciales');
                 startLoadResultsCandidatosProv(form.values);
                 //form.reset();
-            }else if(iddignidad !== 0 && cod_canton !== 0 && cod_parroquia === 0 && cod_recinto === 0){
-                console.log('cantonales');
+            }else if(iddignidad !== 0 && cod_canton !== 0 && (cod_parroquia === 0 || cod_parroquia === null) && (cod_recinto === 0 || cod_recinto === null)){
+                //console.log('cantonales');
                 startLoadResultsCandidatosCant(form.values);
                 //form.reset();
-            } else if( iddignidad !== 0 && cod_canton !== 0 && cod_parroquia !== 0 && cod_recinto === 0){
+            } else if( iddignidad !== 0 && cod_canton !== 0 && cod_parroquia !== 0 && (cod_recinto === 0 || cod_recinto === null)){
+                //console.log('Parroquiales');
                 startLoadResultsCandidatosParr(form.values);
                 //form.reset();
             }else if( iddignidad !== 0 && cod_canton !== 0 && cod_parroquia !== 0 && cod_recinto !== 0){
+                //console.log('Recintos');
                 startLoadResultsCandidatosRec(form.values);
                 //form.reset();
             }
@@ -156,6 +157,21 @@ const SearchCandidato = () => {
                                         value: canton.cod_canton,
                                     };
                                 })}
+                                styles={(theme) => ({
+                                    item: {
+                                      // applies styles to selected item
+                                      '&[data-selected]': {
+                                        '&, &:hover': {
+                                          backgroundColor:
+                                            theme.colorScheme === 'dark' ? theme.colors.teal[9] : theme.colors.teal[1],
+                                          color: theme.colorScheme === 'dark' ? theme.white : theme.colors.teal[9],
+                                        },
+                                      },
+
+                                      // applies styles to hovered item (with mouse or keyboard)
+                                      '&[data-hovered]': {},
+                                    },
+                                  })}
                             />
                         </Grid.Col>
 
