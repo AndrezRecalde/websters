@@ -23,8 +23,8 @@ const SearchJuntasPage = () => {
     const {
         cantones,
         parroquias,
-        startLoadCantones,
-        startLoadParroquias,
+        startLoadCantonesRurales,
+        startLoadParroquiasRurales,
         startClearStates,
     } = useStatesStore();
     const { juntas, startLoadJuntas, startClearDignidades } =
@@ -62,7 +62,7 @@ const SearchJuntasPage = () => {
 
     useEffect(() => {
         form.setFieldValue("cod_parroquia", 0);
-        startLoadParroquias({ cod_canton });
+        startLoadParroquiasRurales({ cod_canton });
     }, [cod_canton]);
 
     useEffect(() => {
@@ -74,7 +74,7 @@ const SearchJuntasPage = () => {
     }, [iddignidad, cod_canton]);
 
     useEffect(() => {
-        startLoadCantones();
+        startLoadCantonesRurales();
         startLoadJuntas();
 
         return () => {
@@ -88,7 +88,8 @@ const SearchJuntasPage = () => {
         const { errors } = form.validate();
         if (
             !errors.hasOwnProperty("iddignidad") &&
-            !errors.hasOwnProperty("cod_canton")
+            !errors.hasOwnProperty("cod_canton") &&
+            !errors.hasOwnProperty("cod_parroquia")
         ) {
             startLoadResultsJuntas(form.values);
             form.reset();

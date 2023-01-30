@@ -30,6 +30,8 @@ Route::get('cantones/rurales', [StatesController::class, 'getCantonesRurales']);
 
 Route::post('parroquias', [StatesController::class, 'getParroquias']);
 
+Route::post('parroquias/rurales', [StatesController::class, 'getParroquiasRurales']);
+
 Route::post('recintos', [StatesController::class, 'getRecintos']);
 
 Route::post('concejales/r/urbanos', [WebsterController::class, 'getConcejalesUrbanos']);

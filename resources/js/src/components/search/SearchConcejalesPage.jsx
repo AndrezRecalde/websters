@@ -87,11 +87,11 @@ const SearchConcejalesPage = () => {
             !errors.hasOwnProperty("cod_canton") &&
             iddignidad === 3
         ) {
-            console.log('urbanos');
+            //console.log('urbanos');
             startLoadResultsConcejalesUrbanos(form.values);
             form.reset();
         } else if( iddignidad === 4){
-            console.log('rurales');
+            //console.log('rurales');
             startLoadResultsConcejalesRurales(form.values);
             form.reset();
         }

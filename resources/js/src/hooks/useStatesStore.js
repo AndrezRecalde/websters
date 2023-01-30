@@ -1,6 +1,7 @@
 
 import { useDispatch, useSelector } from 'react-redux'
 import websterApi from '../api/websterApi';
+import Swal from "sweetalert2";
 import { onClearStates, onLoadCantones, onLoadParroquias, onLoadRecintos } from '../store/states/statesSlice';
 
 export const useStatesStore = () => {
@@ -14,7 +15,12 @@ export const useStatesStore = () => {
             const { cantones } = data;
             dispatch(onLoadCantones(cantones));
         } catch (error) {
-            console.log(error);
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: error,
+                confirmButtonColor: "#c81d11",
+            });
         }
     }
 
@@ -24,7 +30,12 @@ export const useStatesStore = () => {
             const { cantones } = data;
             dispatch(onLoadCantones(cantones));
         } catch (error) {
-            console.log(error);
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: error,
+                confirmButtonColor: "#c81d11",
+            });
         }
     }
 
@@ -34,7 +45,12 @@ export const useStatesStore = () => {
             const { cantones } = data;
             dispatch(onLoadCantones(cantones));
         } catch (error) {
-            console.log(error);
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: error,
+                confirmButtonColor: "#c81d11",
+            });
         }
     }
 
@@ -44,7 +60,27 @@ export const useStatesStore = () => {
             const { parroquias } = data;
             dispatch(onLoadParroquias(parroquias));
         } catch (error) {
-            console.log(error);
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: error,
+                confirmButtonColor: "#c81d11",
+            });
+        }
+    }
+
+    const startLoadParroquiasRurales = async(cod_canton) => {
+        try {
+            const { data } = await websterApi.post("parroquias/rurales", {cod_canton});
+            const { parroquias } = data;
+            dispatch(onLoadParroquias(parroquias));
+        } catch (error) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: error,
+                confirmButtonColor: "#c81d11",
+            });
         }
     }
 
@@ -54,7 +90,12 @@ export const useStatesStore = () => {
             const { recintos } = data;
             dispatch(onLoadRecintos(recintos));
         } catch (error) {
-            console.log(error);
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: error,
+                confirmButtonColor: "#c81d11",
+            });
         }
     }
 
@@ -73,6 +114,7 @@ export const useStatesStore = () => {
     startLoadCantonesUrbanos,
     startLoadCantonesRurales,
     startLoadParroquias,
+    startLoadParroquiasRurales,
     startLoadRecintos,
 
     startClearStates

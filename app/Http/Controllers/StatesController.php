@@ -29,6 +29,18 @@ class StatesController extends Controller
         return response()->json(['status' => 'success', 'parroquias' => $parroquias]);
     }
 
+    public function getParroquiasRurales(Request $request)
+    {
+        $parroquias = Parroquia::from('parroquias as p')
+                        ->select(DB::raw('p.cod_parroquia, p.nombre_parroquia'))
+                        ->join('cantones as c', 'p.cod_canton', 'c.cod_canton')
+                        ->where('p.cod_canton', $request->cod_canton)
+                        ->where('p.estado_parroquia', 'R')
+                        ->get();
+
+        return response()->json(['status' => 'success', 'parroquias' => $parroquias]);
+    }
+
     public function getRecintos(Request $request)
     {
         $recintos = Recinto::from('recintos as re')
