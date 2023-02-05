@@ -18,7 +18,7 @@ export const AppRouter = () => {
         <Route path="/webster/juntas" element={<WebsterJuntasPage />} />
         <Route path="/webster/juntas/*" element={<Navigate to="/webster/juntas" />} />
 
-        <Route path="/*" element={<Navigate to="/webster/concejales" />} />
+        {/* <Route path="/*" element={<Navigate to="/webster/concejales" />} /> */}
 
 
     </Routes>

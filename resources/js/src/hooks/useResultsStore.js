@@ -96,9 +96,9 @@ export const useResultsStore = () => {
         }
     };
 
-    const startLoadResultsCandidatosProv = async ({iddignidad}) => {
+    const startLoadResultsCandidatosProv = async ({iddignidad, cuadrada, legible}) => {
         try {
-            const { data } = await websterApi.post("resultados/provinciales",{iddignidad});
+            const { data } = await websterApi.post("resultados/provinciales",{iddignidad, cuadrada, legible});
             const { candidatos } = data;
 
             if(candidatos.length > 0){
@@ -121,9 +121,9 @@ export const useResultsStore = () => {
         }
     }
 
-    const startLoadResultsCandidatosCant = async ({iddignidad, cod_canton}) => {
+    const startLoadResultsCandidatosCant = async ({iddignidad, cod_canton, cuadrada, legible}) => {
         try {
-            const { data } = await websterApi.post("resultados/cantonales",{iddignidad, cod_canton});
+            const { data } = await websterApi.post("resultados/cantonales",{iddignidad, cod_canton, cuadrada, legible});
             const { candidatos } = data;
 
             if(candidatos.length > 0){
@@ -146,9 +146,9 @@ export const useResultsStore = () => {
         }
     }
 
-    const startLoadResultsCandidatosParr = async ({iddignidad, cod_parroquia}) => {
+    const startLoadResultsCandidatosParr = async ({iddignidad, cod_parroquia, cuadrada, legible}) => {
         try {
-            const { data } = await websterApi.post("resultados/parroquial",{iddignidad, cod_parroquia});
+            const { data } = await websterApi.post("resultados/parroquial",{iddignidad, cod_parroquia, cuadrada, legible});
             const { candidatos } = data;
 
             if(candidatos.length > 0){
@@ -171,9 +171,9 @@ export const useResultsStore = () => {
         }
     }
 
-    const startLoadResultsCandidatosRec = async ({iddignidad, cod_recinto}) => {
+    const startLoadResultsCandidatosRec = async ({iddignidad, cod_recinto, cuadrada, legible}) => {
         try {
-            const { data } = await websterApi.post("resultados/recintos",{iddignidad, cod_recinto});
+            const { data } = await websterApi.post("resultados/recintos",{iddignidad, cod_recinto, cuadrada, legible});
             const { candidatos } = data;
 
             if(candidatos.length > 0){

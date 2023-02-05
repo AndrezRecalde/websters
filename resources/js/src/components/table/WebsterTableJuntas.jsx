@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Badge, Group, Table, Text, Title } from "@mantine/core";
 import { useResultsStore } from "../../hooks/useResultsStore";
 
@@ -173,6 +173,12 @@ const WebsterTableJuntas = () => {
         }, 300);
     }, [resultsJuntasParroquiales]);
 
+    const fechaActual = useCallback(() => {
+        let hoy = new Date();
+
+        return hoy.toLocaleString();
+    }, [resultsJuntasParroquiales]);
+
     return (
         <>
             <Title order={3} align="center" mt={50}>
@@ -190,6 +196,16 @@ const WebsterTableJuntas = () => {
                 </Badge>
                 </Group>
             </Title>
+            <Group position="center">
+                <Badge
+                    mt={3}
+                    size="lg"
+                    radius="xl"
+                    color="indigo"
+                >
+                    {`Fecha & Hora del reporte: ${fechaActual()}`}
+                </Badge>
+            </Group>
             <Table
                 mt="md"
                 mb="md"

@@ -121,6 +121,8 @@ class WebsterController extends Controller
                         ->join('cantones as cn', 'cn.cod_canton', 'pa.cod_canton')
                         ->where('di.iddignidad', $request->iddignidad)
                         ->where('ca.fr_id_provincia', 8)
+                        ->where('ac.cuadrada', $request->cuadrada)
+                        ->where('ac.legible', $request->legible)
                         ->groupBy('ad.fr_id_candidato', 'di.nombre_dignidad')
                         ->orderBy('total_votos', 'DESC')
                         ->get();
@@ -148,6 +150,8 @@ class WebsterController extends Controller
                     ->join('cantones as cn', 'cn.cod_canton', 'pa.cod_canton')
                     ->where('di.iddignidad', $request->iddignidad)
                     ->where('cn.cod_canton', $request->cod_canton)
+                    ->where('ac.cuadrada', $request->cuadrada)
+                    ->where('ac.legible', $request->legible)
                     ->groupBy('ad.fr_id_candidato', 'di.nombre_dignidad')
                     ->orderBy('total_votos', 'DESC')
                     ->get();
@@ -176,6 +180,8 @@ class WebsterController extends Controller
         ->join('cantones as cn', 'cn.cod_canton', 'pa.cod_canton')
         ->where('di.iddignidad', $request->iddignidad)
         ->where('pa.cod_parroquia', $request->cod_parroquia)
+        ->where('ac.cuadrada', $request->cuadrada)
+        ->where('ac.legible', $request->legible)
         ->groupBy('ad.fr_id_candidato', 'di.nombre_dignidad')
         ->orderBy('total_votos', 'DESC')
         ->get();
@@ -203,6 +209,8 @@ class WebsterController extends Controller
                         ->join('recintos as re', 're.cod_recinto', 'ju.cod_recinto')
                         ->where('di.iddignidad', $request->iddignidad)
                         ->where('re.cod_recinto', $request->cod_recinto)
+                        ->where('ac.cuadrada', $request->cuadrada)
+                        ->where('ac.legible', $request->legible)
                         ->groupBy('ad.fr_id_candidato', 'di.nombre_dignidad')
                         ->orderBy('total_votos', 'DESC')
                         ->get();

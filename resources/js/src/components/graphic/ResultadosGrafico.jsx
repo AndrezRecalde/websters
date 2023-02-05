@@ -9,8 +9,8 @@ import {
     Title,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { useResultsStore } from "../../hooks/useResultsStore";
-import { Container } from "@mantine/core";
 
 ChartJS.register(
     CategoryScale,
@@ -18,7 +18,8 @@ ChartJS.register(
     BarElement,
     Title,
     Tooltip,
-    Legend
+    Legend,
+    ChartDataLabels
 );
 
 export const ResultadosGrafico = () => {
@@ -26,7 +27,7 @@ export const ResultadosGrafico = () => {
 
     const labels = resultsCandidatos.map((candidato) => candidato.nombre);
 
-    /*Gráfico de barra horizontal */
+    /* Gráfico de barra horizontal */
     const dataBar = {
         labels,
         datasets: [
@@ -40,7 +41,22 @@ export const ResultadosGrafico = () => {
                 ),
                 borderWidth: 2,
                 borderRadius: 2,
-                borderColor: "black",
+                borderColor: resultsCandidatos.map(
+                    (candidato) => candidato.color
+                ),
+                plugins: [ChartDataLabels],
+                datalabels: {
+                    color: "grey",
+                    align: "bottom",
+                    labels: {
+                        title: {
+                            font: {
+                                weight: "bold",
+                                size: 15
+                            }
+                        }
+                    }
+                }
             },
         ],
     };
@@ -48,10 +64,36 @@ export const ResultadosGrafico = () => {
     const options = {
         redraw: true,
         responsive: true,
+        maintainAspectRatio: false,
         plugins: {
             legend: {
-                display: false,
-                position: "top",
+                onClick: (event, legendItem, legend) => {
+                    const index = legend.chart.data.labels.indexOf(legendItem.text);
+                    legend.chart.toggleDataVisibility(index);
+                    legend.chart.getDataVisibility(index);
+                    legend.chart.update();
+                },
+                labels: {
+                    generateLabels: (chart) => {
+                        let visibility = [];
+                        for(let i = 0; i < chart.data.labels.length; i++){
+                            if(chart.getDataVisibility(i) === true){
+                                visibility.push(false);
+                            }else{
+                                visibility.push(true);
+                            }
+                        }
+                        return chart.data.labels.map(
+                            (label, index) => ({
+                                text: label,
+                                fontColor: "white",
+                                strokeStyle: chart.data.datasets[0].borderColor[index],
+                                fillStyle: chart.data.datasets[0].backgroundColor[index],
+                                hidden: visibility[index]
+                            })
+                        )
+                    }
+                }
             },
             title: {
                 display: true,
@@ -87,8 +129,7 @@ export const ResultadosGrafico = () => {
     };
 
     return (
-        <Container>
-            <Bar options={options} data={dataBar} />
-        </Container>
+            <Bar options={options} data={dataBar} width="100%"
+            height="500px" />
     );
 };

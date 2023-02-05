@@ -8,7 +8,7 @@ import {
     Text,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { IconDatabase, IconHelp } from "@tabler/icons";
+import { IconDatabase } from "@tabler/icons";
 import React, { useEffect } from "react";
 import { useDignidadesStore } from "../../hooks/useDignidadesStore";
 import { useResultsStore } from "../../hooks/useResultsStore";
@@ -41,6 +41,8 @@ const SearchCandidato = () => {
             cod_canton: 0,
             cod_parroquia: 0,
             cod_recinto: 0,
+            cuadrada: 1,
+            legible: 1
         },
         validate: {
             iddignidad: (value) =>
@@ -50,7 +52,7 @@ const SearchCandidato = () => {
         },
     });
 
-    let { iddignidad, cod_canton, cod_parroquia, cod_recinto } = form.values;
+    let { iddignidad, cod_canton, cod_parroquia, cod_recinto, cuadrada, legible } = form.values;
 
     useEffect(() => {
         startLoadCantones();
@@ -78,7 +80,7 @@ const SearchCandidato = () => {
         return () => {
             startClearResults();
         };
-    }, [iddignidad, cod_canton]);
+    }, [iddignidad, cod_canton, cuadrada, legible]);
 
 
     const handleSearch = (e) => {
@@ -91,18 +93,22 @@ const SearchCandidato = () => {
             if(iddignidad !== 0 && (cod_canton === 0 || cod_canton === null) && (cod_parroquia === 0 || cod_parroquia === null) && (cod_recinto === 0 || cod_recinto === 0)){
                 //console.log('Provinciales');
                 startLoadResultsCandidatosProv(form.values);
+                //console.log(form.values);
                 //form.reset();
             }else if(iddignidad !== 0 && cod_canton !== 0 && (cod_parroquia === 0 || cod_parroquia === null) && (cod_recinto === 0 || cod_recinto === null)){
                 //console.log('cantonales');
                 startLoadResultsCandidatosCant(form.values);
+                //console.log(form.values);
                 //form.reset();
             } else if( iddignidad !== 0 && cod_canton !== 0 && cod_parroquia !== 0 && (cod_recinto === 0 || cod_recinto === null)){
                 //console.log('Parroquiales');
                 startLoadResultsCandidatosParr(form.values);
+                //console.log(form.values);
                 //form.reset();
             }else if( iddignidad !== 0 && cod_canton !== 0 && cod_parroquia !== 0 && cod_recinto !== 0){
                 //console.log('Recintos');
                 startLoadResultsCandidatosRec(form.values);
+                //console.log(form.values);
                 //form.reset();
             }
         }
@@ -118,7 +124,7 @@ const SearchCandidato = () => {
                 radius="md"
                 sx={{ position: "static" }}
             >
-                <Card.Section withBorder inheritPadding py="xs">
+                <Card.Section withBorder inheritPadding py="md">
                     <Group position="apart">
                         <Text weight={500}>Resultados - Candidatos</Text>
                     </Group>
@@ -209,6 +215,36 @@ const SearchCandidato = () => {
                             />
                         </Grid.Col>
                     </Grid>
+
+                        <Grid gutter="sm" mt={3}>
+                        <Grid.Col sm={12} md={12} lg={6}>
+                        <Select
+                                    label="Actas Cuadradas"
+                                    placeholder="¿Filtrar actas cuadradas?"
+                                    nothingFound="No options"
+                                    {...form.getInputProps("cuadrada")}
+                                    data={[
+                                        {label: 'Si', value: 1},
+                                        {label: 'No', value: 0}
+                                    ]}
+                                    defaultValue="Si"
+                                />
+                        </Grid.Col>
+                            <Grid.Col sm={12} md={12} lg={6}>
+                                <Select
+                                    label="Actas Legibles"
+                                    placeholder="¿Filtrar actas legibles?"
+                                    nothingFound="No options"
+                                    {...form.getInputProps("legible")}
+                                    data={[
+                                        {label: 'No', value: 0},
+                                        {label: 'Si', value: 1}
+                                    ]}
+                                    defaultValue="No"
+                                />
+                            </Grid.Col>
+
+                        </Grid>
                 </Card.Section>
 
                 <Card.Section inheritPadding mt="sm" pb="md">
@@ -227,10 +263,16 @@ const SearchCandidato = () => {
 
             {resultsCandidatos.length > 0
                 ?
-                <>
-                    <ResultadosCandidatos />
-                    <ResultadosGrafico />
-                </>
+                <Container>
+                <Grid grow>
+                    <Grid.Col sm={12} md={12} lg={12}>
+                        <ResultadosCandidatos />
+                    </Grid.Col>
+                    <Grid.Col sm={12} md={12} lg={12}>
+                        <ResultadosGrafico />
+                    </Grid.Col>
+                </Grid>
+                </Container>
                 :
                 null}
         </Container>
