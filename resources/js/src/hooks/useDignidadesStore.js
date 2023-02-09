@@ -1,15 +1,21 @@
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import websterApi from "../api/websterApi";
-import { onClearDignidades, onLoadConcejales, onLoadJuntas, onLoadPrefectosAlcaldes } from "../store/dignidades/dignidadesSlice";
-
+import {
+    onClearDignidades,
+    onLoadConcejales,
+    onLoadDignidades,
+    onLoadJuntas,
+    onLoadPrefectosAlcaldes,
+} from "../store/dignidades/dignidadesSlice";
 
 export const useDignidadesStore = () => {
-
-    const { candidatos, concejales, juntas } = useSelector(state => state.dignidades);
+    const { candidatos, concejales, juntas } = useSelector(
+        (state) => state.dignidades
+    );
     const dispatch = useDispatch();
 
-    const startLoadConcejales = async() => {
+    const startLoadConcejales = async () => {
         try {
             const { data } = await websterApi.get("dignidades/concejales");
             const { dignidades } = data;
@@ -22,9 +28,9 @@ export const useDignidadesStore = () => {
                 confirmButtonColor: "#c81d11",
             });
         }
-    }
+    };
 
-    const startLoadJuntas = async() => {
+    const startLoadJuntas = async () => {
         try {
             const { data } = await websterApi.get("dignidades/juntas");
             const { dignidades } = data;
@@ -37,9 +43,9 @@ export const useDignidadesStore = () => {
                 confirmButtonColor: "#c81d11",
             });
         }
-    }
+    };
 
-    const startLoadPrefectosAlcaldes = async() => {
+    const startLoadPrefectosAlcaldes = async () => {
         try {
             const { data } = await websterApi.get("dignidades/candidatos");
             const { dignidades } = data;
@@ -52,20 +58,35 @@ export const useDignidadesStore = () => {
                 confirmButtonColor: "#c81d11",
             });
         }
-    }
+    };
+
+    const startLoadDignidades = async () => {
+        try {
+            const { data } = await websterApi.get("dignidades");
+            const { dignidades } = data;
+            dispatch(onLoadDignidades(dignidades));
+        } catch (error) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: error,
+                confirmButtonColor: "#c81d11",
+            });
+        }
+    };
 
     const startClearDignidades = () => {
         dispatch(onClearDignidades());
-    }
+    };
 
-  return {
-    candidatos,
-    concejales,
-    juntas,
-    startLoadPrefectosAlcaldes,
-    startLoadConcejales,
-    startLoadJuntas,
-    startClearDignidades
-  }
-}
-
+    return {
+        candidatos,
+        concejales,
+        juntas,
+        startLoadPrefectosAlcaldes,
+        startLoadConcejales,
+        startLoadJuntas,
+        startLoadDignidades,
+        startClearDignidades,
+    };
+};

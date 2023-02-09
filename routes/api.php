@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\ActaController;
 use App\Http\Controllers\DignidadController;
+use App\Http\Controllers\ExportController;
 use App\Http\Controllers\StatesController;
 use App\Http\Controllers\WebsterController;
 use Illuminate\Support\Facades\Route;
@@ -15,6 +17,8 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+Route::get('dignidades', [DignidadController::class, 'getDignidades']);
 
 Route::get('dignidades/concejales', [DignidadController::class, 'getConcejales']);
 
@@ -47,6 +51,15 @@ Route::post('resultados/cantonales', [WebsterController::class, 'getCantonales']
 Route::post('resultados/parroquial', [WebsterController::class, 'getParroquial']);
 
 Route::post('resultados/recintos', [WebsterController::class, 'getRecinto']);
+
+Route::post('actas', [ActaController::class, 'getActas']);
+
+Route::post('actas/todas', [ActaController::class, 'getAllActas']);
+
+
+Route::post('/actas/export/excel', [ExportController::class, 'actaExportExcel']);
+
+Route::post('/actas/export/excel/todas', [ExportController::class, 'actaAllExportExcel']);
 
 
 

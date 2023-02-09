@@ -18,7 +18,9 @@ export const dignidadesSlice = createSlice({
         onLoadJuntas: (state, {payload}) => {
             state.juntas = payload;
         },
-
+        onLoadDignidades: (state, {payload}) => {
+            state.candidatos = payload;
+        },
         onClearDignidades: (state) => {
             state.candidatos = [];
             state.concejales = [];
@@ -27,4 +29,4 @@ export const dignidadesSlice = createSlice({
     }
 });
 
-export const { onLoadPrefectosAlcaldes, onLoadConcejales, onLoadJuntas, onClearDignidades } = dignidadesSlice.actions;
+export const { onLoadPrefectosAlcaldes, onLoadConcejales, onLoadJuntas, onLoadDignidades,  onClearDignidades } = dignidadesSlice.actions;

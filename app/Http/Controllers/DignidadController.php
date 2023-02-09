@@ -44,4 +44,11 @@ class DignidadController extends Controller
         })->values()
     ));
     }
+
+    public function getDignidades()
+    {
+        $dignidades = Dignidad::get(['iddignidad', 'nombre_dignidad']);
+
+        return response()->json(['status' => 'success', 'dignidades' => $dignidades]);
+    }
 }
