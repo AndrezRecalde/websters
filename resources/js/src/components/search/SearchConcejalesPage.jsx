@@ -123,7 +123,7 @@ const SearchConcejalesPage = () => {
     };
 
     return (
-        <Container size={1200}>
+        <Container>
             <Grid>
                 <Grid.Col span={8}>
                     <Card
@@ -208,13 +208,13 @@ const SearchConcejalesPage = () => {
                                 sx={{ height: "400px", width: "600px" }}
                             >
                                 <EscConcejales />
-                                {totalJuntas[0]?.total -
+                                { totalJuntas[0]?.total -
                                     totalIngresadas[0]?.digitadas ===
                                 0 ? (
                                     <Text
                                         variant="gradient"
                                         gradient={{
-                                            from: "green",
+                                            from: "teal",
                                             to: "cyan",
                                             deg: 45,
                                         }}

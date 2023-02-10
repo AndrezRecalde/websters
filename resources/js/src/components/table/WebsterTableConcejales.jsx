@@ -46,6 +46,7 @@ const WebsterTableConcejales = () => {
             <tr key={results.idorganizacion}>
                 <td>{results.lista}</td>
                 <td>{results.nombre}</td>
+                <td>{results.siglas}</td>
                 <td>{results.total_votos}</td>
                 <td>
                     {valores
@@ -214,6 +215,7 @@ const WebsterTableConcejales = () => {
                     <tr>
                         <th>Lista</th>
                         <th>Organización</th>
+                        <th>Siglas</th>
                         <th>Total Votos</th>
                         <th>1</th>
                         <th>3</th>

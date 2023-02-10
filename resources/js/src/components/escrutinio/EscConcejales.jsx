@@ -18,11 +18,11 @@ export const EscConcejales = () => {
             label: 'Total',
             data: [totalIngresadas[0]?.digitadas, totalJuntas[0]?.total - totalIngresadas[0]?.digitadas],
             backgroundColor: [
-              'rgba(54, 162, 235, 0.2)',
+              'rgba(99, 255, 222)',
               'rgba(255, 99, 132, 0.2)',
             ],
             borderColor: [
-              'rgba(54, 162, 235, 1)',
+              'rgba(99, 255, 222)',
               'rgba(255, 99, 132, 1)',
             ],
             borderWidth: 1,

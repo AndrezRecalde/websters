@@ -216,11 +216,11 @@ const SearchJuntasPage = () => {
                             sx={{ height: "400px", width: "600px" }}
                         >
                             <EscConcejales />
-                            {totalJuntas[0]?.total - totalIngresadas[0]?.digitadas === 0 ? (
+                            { totalJuntas[0]?.total - totalIngresadas[0]?.digitadas === 0 ? (
                             <Text
                             variant="gradient"
                             gradient={{
-                                from: "green",
+                                from: "teal",
                                 to: "cyan",
                                 deg: 45,
                             }}
@@ -234,8 +234,8 @@ const SearchJuntasPage = () => {
                         ): <Text
                             variant="gradient"
                             gradient={{
-                                from: "red",
-                                to: "red",
+                                from: "teal",
+                                to: "cyan",
                                 deg: 45,
                             }}
                             sx={{
