@@ -16,7 +16,7 @@ export const EscConcejales = () => {
         datasets: [
           {
             label: 'Total',
-            data: [totalIngresadas[0]?.digitadas, totalJuntas[0]?.total],
+            data: [totalIngresadas[0]?.digitadas, totalJuntas[0]?.total - totalIngresadas[0]?.digitadas],
             backgroundColor: [
               'rgba(54, 162, 235, 0.2)',
               'rgba(255, 99, 132, 0.2)',
