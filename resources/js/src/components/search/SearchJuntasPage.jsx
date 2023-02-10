@@ -234,8 +234,8 @@ const SearchJuntasPage = () => {
                         ): <Text
                             variant="gradient"
                             gradient={{
-                                from: "teal",
-                                to: "cyan",
+                                from: "red",
+                                to: "red",
                                 deg: 45,
                             }}
                             sx={{
