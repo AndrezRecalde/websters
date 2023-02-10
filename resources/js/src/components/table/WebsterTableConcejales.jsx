@@ -139,7 +139,7 @@ const WebsterTableConcejales = () => {
                     )}
                 </td>
 
-                <td>
+                {/* <td>
                     <input
                         disabled
                         id={i}
@@ -149,21 +149,21 @@ const WebsterTableConcejales = () => {
                             height: "30px",
                         }}
                     />
-                </td>
+                </td> */}
             </tr>
         );
     });
 
-    const boxChange = (i, divs) => {
+    /* const boxChange = (i, divs) => {
         let tot = document.getElementById(i).value;
         //console.log(document.getElementById(i).value);
         if (divs.current[i]?.style.fontWeight === "bold") {
             tot++;
         }
         document.getElementById(i).value = tot;
-    };
+    }; */
 
-    useEffect(() => {
+    /* useEffect(() => {
         setTimeout(() => {
             for (let i = 0; i < 5; i++) {
                 if (divRef_1.current[i]?.style.fontWeight === "bold") {
@@ -174,7 +174,7 @@ const WebsterTableConcejales = () => {
                 }
             }
         }, 300);
-    }, [resultsConcejales]);
+    }, [resultsConcejales]); */
 
     const fechaActual = useCallback(() => {
         let hoy = new Date();
@@ -219,7 +219,7 @@ const WebsterTableConcejales = () => {
                         <th>3</th>
                         <th>5</th>
                         <th>7</th>
-                        <th>Total Escaños</th>
+                        {/* <th>Total Escaños</th> */}
                     </tr>
                 </thead>
                 <tbody>{rows}</tbody>

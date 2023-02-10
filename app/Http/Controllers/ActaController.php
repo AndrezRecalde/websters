@@ -137,7 +137,7 @@ class ActaController extends Controller
     public function getTotalJuntasCantonesRurales(Request $request)
     {
         $totalJuntasCantonesRurales = DB::table('junta as j')
-                        ->join('zonas as zo', 'zo.idzona', 'j.fr_id_zona')
+                        ->join('zonas as zo', 'zo.idzonas', 'j.fr_id_zona')
                         ->join('parroquias as pa', 'pa.cod_parroquia', 'zo.cod_parroquia')
                         ->join('cantones as ca', 'ca.cod_canton', 'pa.cod_canton')
                         ->where('pa.cod_canton', $request->cod_canton)

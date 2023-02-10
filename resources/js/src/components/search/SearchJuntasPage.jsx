@@ -39,7 +39,7 @@ const SearchJuntasPage = () => {
     } = useResultsStore();
 
     const { startLoadTotalJuntasParr,
-            startLoadTotalActasIngresadasJuntas } = useActasStore();
+            startLoadTotalActasIngresadasJuntas, startClearActas } = useActasStore();
 
     const { modalAction } = useUiStore();
 
@@ -78,6 +78,7 @@ const SearchJuntasPage = () => {
 
         return () => {
             startClearResults();
+            startClearActas();
         };
     }, [iddignidad, cod_canton]);
 

@@ -136,7 +136,7 @@ const WebsterTableJuntas = () => {
                         <div>{total_7}</div>
                     )}
                 </td>
-                <td>
+                {/* <td>
                     <input
                         disabled
                         id={i}
@@ -146,21 +146,21 @@ const WebsterTableJuntas = () => {
                             height: "30px",
                         }}
                     />
-                </td>
+                </td> */}
             </tr>
         );
     });
 
-    const boxChange = (i, divs) => {
+    /* const boxChange = (i, divs) => {
         let tot = document.getElementById(i).value;
         //console.log(document.getElementById(i).value);
         if (divs.current[i]?.style.fontWeight === "bold") {
             tot++;
         }
         document.getElementById(i).value = tot;
-    };
+    }; */
 
-    useEffect(() => {
+    /* useEffect(() => {
         setTimeout(() => {
             for (let i = 0; i < 5; i++) {
                 if (divRef_1.current[i]?.style.fontWeight === "bold") {
@@ -171,7 +171,7 @@ const WebsterTableJuntas = () => {
                 }
             }
         }, 300);
-    }, [resultsJuntasParroquiales]);
+    }, [resultsJuntasParroquiales]); */
 
     const fechaActual = useCallback(() => {
         let hoy = new Date();
@@ -225,7 +225,7 @@ const WebsterTableJuntas = () => {
                         <th>3</th>
                         <th>5</th>
                         <th>7</th>
-                        <th>Total Escaños</th>
+                        {/* <th>Total Escaños</th> */}
                     </tr>
                 </thead>
                 <tbody>{rows}</tbody>

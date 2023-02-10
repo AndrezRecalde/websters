@@ -42,7 +42,7 @@ const SearchConcejalesPage = () => {
 
     const { startLoadTotalActasIngresadasCanton,
             startLoadTotalJuntasCantonesUrbanos,
-            startLoadTotalJuntasCantonesRural } = useActasStore();
+            startLoadTotalJuntasCantonesRural, startClearActas } = useActasStore();
 
     const { modalAction } = useUiStore();
 
@@ -71,6 +71,7 @@ const SearchConcejalesPage = () => {
 
         return () => {
             startClearResults();
+            startClearActas();
         };
     }, [iddignidad, cod_canton]);
 
