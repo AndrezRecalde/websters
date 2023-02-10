@@ -216,10 +216,37 @@ const SearchJuntasPage = () => {
                             sx={{ height: "400px", width: "600px" }}
                         >
                             <EscConcejales />
+                            {totalJuntas[0]?.total - totalIngresadas[0]?.digitadas === 0 ? (
+                            <Text
+                            variant="gradient"
+                            gradient={{
+                                from: "green",
+                                to: "cyan",
+                                deg: 45,
+                            }}
+                            sx={{
+                                fontFamily:
+                                    "Greycliff CF, sans-serif",
+                            }}
+                            ta="center"
+                            fz="xl"
+                            fw={500}>Completado</Text>
+                        ): <Text
+                            variant="gradient"
+                            gradient={{
+                                from: "red",
+                                to: "red",
+                                deg: 45,
+                            }}
+                            sx={{
+                            fontFamily:
+                                "Greycliff CF, sans-serif",
+                        }}
+                        ta="center"
+                        fz="xl"
+                        fw={500}>Faltan Actas de Ingresar</Text>}
                         </Card>
-                        {totalJuntas[0]?.total - totalIngresadas[0]?.digitadas === 0 ? (
-                            <Text>Completado</Text>
-                        ): <Text>Faltan Actas de Ingresar</Text>}
+
                     </Flex>
                 </Grid.Col>
 
