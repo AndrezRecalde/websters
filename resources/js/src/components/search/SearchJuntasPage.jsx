@@ -39,9 +39,11 @@ const SearchJuntasPage = () => {
     } = useResultsStore();
 
     const { startLoadTotalJuntasParr,
-            startLoadTotalActasIngresadasJuntas, startClearActas } = useActasStore();
+            startLoadTotalActasIngresadasJuntas, startClearActas, totalIngresadas, totalJuntas } = useActasStore();
 
     const { modalAction } = useUiStore();
+
+
 
     const form = useForm({
         initialValues: {
@@ -215,6 +217,9 @@ const SearchJuntasPage = () => {
                         >
                             <EscConcejales />
                         </Card>
+                        {totalJuntas[0]?.total - totalIngresadas[0]?.digitadas === 0 ? (
+                            <Text>Completado</Text>
+                        ): <Text>Faltan Actas de Ingresar</Text>}
                     </Flex>
                 </Grid.Col>
 

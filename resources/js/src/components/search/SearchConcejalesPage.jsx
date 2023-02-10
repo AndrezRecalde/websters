@@ -40,9 +40,14 @@ const SearchConcejalesPage = () => {
         startClearResults,
     } = useResultsStore();
 
-    const { startLoadTotalActasIngresadasCanton,
-            startLoadTotalJuntasCantonesUrbanos,
-            startLoadTotalJuntasCantonesRural, startClearActas } = useActasStore();
+    const {
+        startLoadTotalActasIngresadasCanton,
+        startLoadTotalJuntasCantonesUrbanos,
+        startLoadTotalJuntasCantonesRural,
+        startClearActas,
+        totalIngresadas,
+        totalJuntas,
+    } = useActasStore();
 
     const { modalAction } = useUiStore();
 
@@ -195,8 +200,7 @@ const SearchConcejalesPage = () => {
                 </Grid.Col>
                 {resultsConcejales.length > 0 ? (
                     <Grid.Col span={4}>
-                        <Flex justify="center"
-                              align="center">
+                        <Flex justify="center" align="center">
                             <Card
                                 mt={20}
                                 shadow="sm"
@@ -204,6 +208,41 @@ const SearchConcejalesPage = () => {
                                 sx={{ height: "400px", width: "600px" }}
                             >
                                 <EscConcejales />
+                                {totalJuntas[0]?.total -
+                                    totalIngresadas[0]?.digitadas ===
+                                0 ? (
+                                    <Text
+                                        variant="gradient"
+                                        gradient={{
+                                            from: "green",
+                                            to: "cyan",
+                                            deg: 45,
+                                        }}
+                                        sx={{
+                                            fontFamily:
+                                                "Greycliff CF, sans-serif",
+                                        }}
+                                        ta="center"
+                                        fz="xl"
+                                        fw={500}
+                                    >
+                                        Completado
+                                    </Text>
+                                ) : (
+                                    <Text variant="gradient"
+                                    gradient={{
+                                        from: "red",
+                                        to: "red",
+                                        deg: 45,
+                                    }}
+                                    sx={{
+                                        fontFamily:
+                                            "Greycliff CF, sans-serif",
+                                    }}
+                                    ta="center"
+                                    fz="xl"
+                                    fw={500}>Faltan Actas de Ingresar</Text>
+                                )}
                             </Card>
                         </Flex>
                     </Grid.Col>
