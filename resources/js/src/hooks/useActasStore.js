@@ -2,15 +2,15 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import websterApi from "../api/websterApi";
-import { onClearActas, onLoadActas } from "../store/actas/actasSlice";
+import { onClearActas, onLoadActas, onLoadTotalIngresadas, onLoadTotalJuntas } from "../store/actas/actasSlice";
 
 export const useActasStore = () => {
-    const { actas } = useSelector((state) => state.actas);
+    const { actas, totalIngresadas, totalJuntas } = useSelector((state) => state.actas);
     const dispatch = useDispatch();
 
    const startLoadActas = async({iddignidad, cod_canton, cod_parroquia, tipo_acta}) => {
     try {
-        const { data } = await websterApi.post("actas", {iddignidad, cod_canton, cod_parroquia, tipo_acta});
+        const { data } = await websterApi.post("/actas", {iddignidad, cod_canton, cod_parroquia, tipo_acta});
         const { actas } = data;
         if(actas.length > 0) {
             dispatch(onLoadActas(actas));
@@ -34,7 +34,7 @@ export const useActasStore = () => {
 
    const startLoadAllActas = async({iddignidad, cod_canton, cod_parroquia}) => {
     try {
-        const { data } = await websterApi.post("actas/todas", {iddignidad, cod_canton, cod_parroquia});
+        const { data } = await websterApi.post("/actas/todas", {iddignidad, cod_canton, cod_parroquia});
         const { actas } = data;
         if(actas.length > 0) {
             dispatch(onLoadActas(actas));
@@ -82,6 +82,81 @@ export const useActasStore = () => {
         }
     }
 
+    const startLoadTotalActasIngresadasCanton = async (iddignidad, cod_canton) => {
+        try {
+            const { data } = await websterApi.post("/actas/ingresadas/cantonal", {iddignidad, cod_canton});
+            const { totalActasIngresadas } = data;
+            dispatch(onLoadTotalIngresadas(totalActasIngresadas ));
+        } catch (error) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: error,
+                confirmButtonColor: "#c81d11",
+            });
+        }
+    }
+
+    const startLoadTotalJuntasCantonesUrbanos= async (cod_canton) => {
+        try {
+            const { data } = await websterApi.post("/juntas/totales/cantonal/urbano", {cod_canton});
+            const { totalJuntasCantonesUrbanos } = data;
+            dispatch(onLoadTotalJuntas(totalJuntasCantonesUrbanos));
+        } catch (error) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: error,
+                confirmButtonColor: "#c81d11",
+            });
+        }
+    }
+
+    const startLoadTotalJuntasCantonesRural = async (cod_canton) => {
+        try {
+            const { data } = await websterApi.post("/juntas/totales/cantonal/rural", {cod_canton});
+            const { totalJuntasCantonesRurales } = data;
+            dispatch(onLoadTotalJuntas(totalJuntasCantonesRurales));
+        } catch (error) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: error,
+                confirmButtonColor: "#c81d11",
+            });
+        }
+    }
+
+    const startLoadTotalJuntasParr = async(cod_parroquia) => {
+        try {
+            const { data } = await websterApi.post("/juntas/totales/parroquiales", {cod_parroquia});
+            const { totalJuntasParroquia } = data;
+            dispatch(onLoadTotalJuntas(totalJuntasParroquia));
+        } catch (error) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: error,
+                confirmButtonColor: "#c81d11",
+            });
+        }
+    }
+
+    const startLoadTotalActasIngresadasJuntas = async(iddignidad, cod_parroquia) => {
+        try {
+            const { data } = await websterApi.post("/actas/ingresadas/parroquiales", {iddignidad, cod_parroquia});
+            const { totalActasIngresadasParr } = data;
+            dispatch(onLoadTotalIngresadas(totalActasIngresadasParr));
+        } catch (error) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: error,
+                confirmButtonColor: "#c81d11",
+            });
+        }
+    }
+
     return {
         actas,
 
@@ -89,6 +164,13 @@ export const useActasStore = () => {
         startClearActas,
         startExportExcelActas,
         startLoadAllActas,
-        startExportExcelActasAll
+        startExportExcelActasAll,
+        startLoadTotalActasIngresadasCanton,
+        startLoadTotalJuntasCantonesUrbanos,
+        startLoadTotalJuntasCantonesRural,
+        startLoadTotalJuntasParr,
+        startLoadTotalActasIngresadasJuntas,
+        totalIngresadas,
+        totalJuntas
     };
 };

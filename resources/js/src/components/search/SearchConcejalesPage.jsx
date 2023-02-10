@@ -3,6 +3,7 @@ import {
     Button,
     Card,
     Container,
+    Flex,
     Grid,
     Group,
     Select,
@@ -11,24 +12,39 @@ import {
 import { useForm } from "@mantine/form";
 import { IconDatabase, IconHelp } from "@tabler/icons";
 import React, { useEffect } from "react";
+import { useActasStore } from "../../hooks/useActasStore";
 import { useDignidadesStore } from "../../hooks/useDignidadesStore";
 import { useResultsStore } from "../../hooks/useResultsStore";
 import { useStatesStore } from "../../hooks/useStatesStore";
 import { useUiStore } from "../../hooks/useUiStore";
-
+import { EscConcejales } from "../escrutinio/EscConcejales";
 
 import WebsterTable from "../table/WebsterTableConcejales";
 import { ModalHelp } from "../ui/ModalHelp";
 
-
 const SearchConcejalesPage = () => {
-    const { cantones, startLoadCantonesUrbanos, startLoadCantonesRurales, startClearStates } = useStatesStore();
+    const {
+        cantones,
+        startLoadCantonesUrbanos,
+        startLoadCantonesRurales,
+        startClearStates,
+    } = useStatesStore();
+
     const { concejales, startLoadConcejales, startClearDignidades } =
         useDignidadesStore();
-    const { resultsConcejales, startLoadResultsConcejalesUrbanos, startLoadResultsConcejalesRurales, startClearResults } =
-        useResultsStore();
-    const { modalAction } = useUiStore();
 
+    const {
+        resultsConcejales,
+        startLoadResultsConcejalesUrbanos,
+        startLoadResultsConcejalesRurales,
+        startClearResults,
+    } = useResultsStore();
+
+    const { startLoadTotalActasIngresadasCanton,
+            startLoadTotalJuntasCantonesUrbanos,
+            startLoadTotalJuntasCantonesRural } = useActasStore();
+
+    const { modalAction } = useUiStore();
 
     const form = useForm({
         initialValues: {
@@ -67,17 +83,16 @@ const SearchConcejalesPage = () => {
     }, []);
 
     useEffect(() => {
-        if(iddignidad === 3){
+        if (iddignidad === 3) {
             startLoadCantonesUrbanos();
-        } else if(iddignidad === 4){
+        } else if (iddignidad === 4) {
             startLoadCantonesRurales();
         }
 
-      return () => {
-        startClearStates();
-      }
-    }, [iddignidad])
-
+        return () => {
+            startClearStates();
+        };
+    }, [iddignidad]);
 
     const handleSearch = (e) => {
         e.preventDefault();
@@ -89,18 +104,22 @@ const SearchConcejalesPage = () => {
         ) {
             //console.log('urbanos');
             startLoadResultsConcejalesUrbanos(form.values);
+            startLoadTotalActasIngresadasCanton(iddignidad, cod_canton);
+            startLoadTotalJuntasCantonesUrbanos(cod_canton);
             form.reset();
-        } else if( iddignidad === 4){
+        } else if (iddignidad === 4) {
             //console.log('rurales');
             startLoadResultsConcejalesRurales(form.values);
+            startLoadTotalActasIngresadasCanton(iddignidad, cod_canton);
+            startLoadTotalJuntasCantonesRural(cod_canton);
             form.reset();
         }
     };
 
     return (
-        <Container>
+        <Container size={1200}>
             <Grid>
-                <Grid.Col span={12}>
+                <Grid.Col span={8}>
                     <Card
                         withBorder
                         shadow="sm"
@@ -173,6 +192,21 @@ const SearchConcejalesPage = () => {
                         </Card.Section>
                     </Card>
                 </Grid.Col>
+                {resultsConcejales.length > 0 ? (
+                    <Grid.Col span={4}>
+                        <Flex justify="center"
+                              align="center">
+                            <Card
+                                mt={20}
+                                shadow="sm"
+                                p="lg"
+                                sx={{ height: "400px", width: "600px" }}
+                            >
+                                <EscConcejales />
+                            </Card>
+                        </Flex>
+                    </Grid.Col>
+                ) : null}
             </Grid>
 
             {resultsConcejales.length > 0 ? <WebsterTable /> : null}

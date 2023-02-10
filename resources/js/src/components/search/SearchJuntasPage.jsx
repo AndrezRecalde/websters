@@ -3,6 +3,7 @@ import {
     Button,
     Card,
     Container,
+    Flex,
     Grid,
     Group,
     Select,
@@ -11,10 +12,12 @@ import {
 import { useForm } from "@mantine/form";
 import { IconDatabase, IconHelp } from "@tabler/icons";
 import React, { useEffect } from "react";
+import { useActasStore } from "../../hooks/useActasStore";
 import { useDignidadesStore } from "../../hooks/useDignidadesStore";
 import { useResultsStore } from "../../hooks/useResultsStore";
 import { useStatesStore } from "../../hooks/useStatesStore";
 import { useUiStore } from "../../hooks/useUiStore";
+import { EscConcejales } from "../escrutinio/EscConcejales";
 
 import WebsterTableJuntas from "../table/WebsterTableJuntas";
 import { ModalHelp } from "../ui/ModalHelp";
@@ -29,11 +32,16 @@ const SearchJuntasPage = () => {
     } = useStatesStore();
     const { juntas, startLoadJuntas, startClearDignidades } =
         useDignidadesStore();
-    const { resultsJuntasParroquiales, startLoadResultsJuntas, startClearResults } =
-        useResultsStore();
+    const {
+        resultsJuntasParroquiales,
+        startLoadResultsJuntas,
+        startClearResults,
+    } = useResultsStore();
+
+    const { startLoadTotalJuntasParr,
+            startLoadTotalActasIngresadasJuntas } = useActasStore();
 
     const { modalAction } = useUiStore();
-
 
     const form = useForm({
         initialValues: {
@@ -54,11 +62,11 @@ const SearchJuntasPage = () => {
             cod_parroquia: (value) =>
                 value === 0 || value === null
                     ? "Por favor seleccione una parroquia"
-                    : null
+                    : null,
         },
     });
 
-    const { iddignidad, cod_canton } = form.values;
+    const { iddignidad, cod_canton, cod_parroquia } = form.values;
 
     useEffect(() => {
         form.setFieldValue("cod_parroquia", 0);
@@ -92,103 +100,130 @@ const SearchJuntasPage = () => {
             !errors.hasOwnProperty("cod_parroquia")
         ) {
             startLoadResultsJuntas(form.values);
+            startLoadTotalJuntasParr(cod_parroquia);
+            startLoadTotalActasIngresadasJuntas(iddignidad, cod_parroquia);
             form.reset();
         }
     };
 
     return (
         <Container>
-            <Card
-                withBorder
-                shadow="sm"
-                p="lg"
-                mt={50}
-                radius="md"
-                sx={{ position: "static" }}
-            >
-                <Card.Section withBorder inheritPadding py="xs">
-                    <Group position="apart">
-                        <Text weight={500}>Webster - Juntas Parroquiales</Text>
-                            <ActionIcon
-                                onClick={() => modalAction("open")}
-                                variant="subtle"
+            <Grid>
+                <Grid.Col span={8}>
+                    <Card
+                        withBorder
+                        shadow="sm"
+                        p="lg"
+                        mt={50}
+                        radius="md"
+                        sx={{ position: "static" }}
+                    >
+                        <Card.Section withBorder inheritPadding py="xs">
+                            <Group position="apart">
+                                <Text weight={500}>
+                                    Webster - Juntas Parroquiales
+                                </Text>
+                                <ActionIcon
+                                    onClick={() => modalAction("open")}
+                                    variant="subtle"
                                 >
-                                <IconHelp size={22} />
-                            </ActionIcon>
-                    </Group>
-                </Card.Section>
+                                    <IconHelp size={22} />
+                                </ActionIcon>
+                            </Group>
+                        </Card.Section>
 
-                <Card.Section inheritPadding mt="sm" pb="lg">
-                    <Grid grow gutter="sm">
-                        <Grid.Col md={6} lg={4}>
-                            <Select
-                                disabled
-                                label="Dignidad"
-                                placeholder="Seleccione una Dignidad"
-                                searchable
-                                clearable
-                                nothingFound="No options"
-                                {...form.getInputProps("iddignidad")}
-                                data={juntas.map((junta) => {
-                                    return {
-                                        label: junta.nombre_dignidad,
-                                        value: junta.iddignidad,
-                                    };
-                                })}
-                            />
-                        </Grid.Col>
+                        <Card.Section inheritPadding mt="sm" pb="lg">
+                            <Grid grow gutter="sm">
+                                <Grid.Col md={6} lg={4}>
+                                    <Select
+                                        disabled
+                                        label="Dignidad"
+                                        placeholder="Seleccione una Dignidad"
+                                        searchable
+                                        clearable
+                                        nothingFound="No options"
+                                        {...form.getInputProps("iddignidad")}
+                                        data={juntas.map((junta) => {
+                                            return {
+                                                label: junta.nombre_dignidad,
+                                                value: junta.iddignidad,
+                                            };
+                                        })}
+                                    />
+                                </Grid.Col>
 
-                        <Grid.Col md={6} lg={4}>
-                            <Select
-                                label="Cantón"
-                                placeholder="Seleccione un cantón"
-                                searchable
-                                clearable
-                                nothingFound="No options"
-                                {...form.getInputProps("cod_canton")}
-                                data={cantones.map((canton) => {
-                                    return {
-                                        label: canton.nombre_canton,
-                                        value: canton.cod_canton,
-                                    };
-                                })}
-                            />
-                        </Grid.Col>
+                                <Grid.Col md={6} lg={4}>
+                                    <Select
+                                        label="Cantón"
+                                        placeholder="Seleccione un cantón"
+                                        searchable
+                                        clearable
+                                        nothingFound="No options"
+                                        {...form.getInputProps("cod_canton")}
+                                        data={cantones.map((canton) => {
+                                            return {
+                                                label: canton.nombre_canton,
+                                                value: canton.cod_canton,
+                                            };
+                                        })}
+                                    />
+                                </Grid.Col>
 
-                        <Grid.Col md={6} lg={4}>
-                            <Select
-                                label="Parroquia"
-                                placeholder="Seleccione una Parroquia"
-                                searchable
-                                clearable
-                                nothingFound="No options"
-                                {...form.getInputProps("cod_parroquia")}
-                                data={parroquias.map((parroquia) => {
-                                    return {
-                                        label: parroquia.nombre_parroquia,
-                                        value: parroquia.cod_parroquia,
-                                    };
-                                })}
-                            />
-                        </Grid.Col>
-                    </Grid>
-                </Card.Section>
+                                <Grid.Col md={6} lg={4}>
+                                    <Select
+                                        label="Parroquia"
+                                        placeholder="Seleccione una Parroquia"
+                                        searchable
+                                        clearable
+                                        nothingFound="No options"
+                                        {...form.getInputProps("cod_parroquia")}
+                                        data={parroquias.map((parroquia) => {
+                                            return {
+                                                label: parroquia.nombre_parroquia,
+                                                value: parroquia.cod_parroquia,
+                                            };
+                                        })}
+                                    />
+                                </Grid.Col>
+                            </Grid>
+                        </Card.Section>
 
-                <Card.Section inheritPadding mt="sm" pb="md">
-                    <Group position="center">
-                        <Button
-                            leftIcon={<IconDatabase />}
-                            variant="outline"
-                            color="teal"
-                            onClick={handleSearch}
+                        <Card.Section inheritPadding mt="sm" pb="md">
+                            <Group position="center">
+                                <Button
+                                    leftIcon={<IconDatabase />}
+                                    variant="outline"
+                                    color="teal"
+                                    onClick={handleSearch}
+                                >
+                                    Realizar Búsqueda
+                                </Button>
+                            </Group>
+                        </Card.Section>
+                    </Card>
+                </Grid.Col>
+
+            {resultsJuntasParroquiales.length > 0 ? (
+                <Grid.Col span={4}>
+                    <Flex justify="center" align="center">
+                        <Card
+                            mt={20}
+                            shadow="sm"
+                            p="lg"
+                            sx={{ height: "400px", width: "600px" }}
                         >
-                            Realizar Búsqueda
-                        </Button>
-                    </Group>
-                </Card.Section>
-            </Card>
+                            <EscConcejales />
+                        </Card>
+                    </Flex>
+                </Grid.Col>
 
-            {resultsJuntasParroquiales.length > 0 ? <WebsterTableJuntas /> : null}
+            ) : null }
+
+
+            </Grid>
+            {resultsJuntasParroquiales.length > 0 ? (
+                <WebsterTableJuntas />
+            ) : null}
             <ModalHelp />
         </Container>
     );

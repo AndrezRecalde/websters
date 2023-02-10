@@ -49,6 +49,7 @@ class ActaController extends Controller
                         ->parroquia($request->cod_parroquia)
                         ->cuadrada($request->tipo_acta)
                         ->orderBy('nombre_parroquia', 'ASC')
+                        ->orderBy('junta_string', 'ASC')
                         ->get();
 
         return response()->json(['status' => 'success', 'actas' => $actas]);
@@ -92,8 +93,91 @@ class ActaController extends Controller
                         ->canton($request->cod_canton)
                         ->parroquia($request->cod_parroquia)
                         ->orderBy('nombre_parroquia', 'ASC')
+                        ->orderBy('junta_string', 'ASC')
                         ->get();
 
         return response()->json(['status' => 'success', 'actas' => $actas]);
+    }
+
+    public function getTotalActasIngresadasCanton(Request $request)
+    {
+        $totalActasIngresadas = Detalle::from('acta as a')
+                                ->select(DB::raw('COUNT(*) AS digitadas'))
+                                ->join('acta_estado as ae', 'a.fr_id_acta_estado', 'ae.idacta_estado')
+                                ->join('provincia as p', 'p.cne_cod_prov', 'a.cod_provincia')
+                                ->join('cantones as c', 'c.cod_canton', 'a.cod_canton')
+                                ->join('parroquias as pa', 'pa.cod_parroquia', 'a.cod_parroquia')
+                                ->join('zonas as z', 'z.idzonas', 'a.cod_zona')
+                                ->join('dignidad as d', 'd.iddignidad', 'a.fr_id_dignidad')
+                                ->join('junta as j', 'j.idjunta', 'a.fr_id_junta')
+                                ->join('usuario as us', 'us.idusuario', 'a.acta_usu_ing')
+                                ->where('a.fr_id_dignidad', $request->iddignidad)
+                                ->where('c.cod_canton', $request->cod_canton)
+                                ->get();
+
+        return response()->json(['status' => 'success', 'totalActasIngresadas' => $totalActasIngresadas]);
+    }
+
+    public function getTotalJuntasCantonesUrbanos(Request $request)
+    {
+        $totalJuntasCantonesUrbanos = DB::table('junta as j')
+                        ->join('zonas as zo', 'zo.idzonas', 'j.fr_id_zona')
+                        ->join('parroquias as pa', 'pa.cod_parroquia', 'zo.cod_parroquia')
+                        ->join('cantones as ca', 'ca.cod_canton', 'pa.cod_canton')
+                        ->where('pa.cod_canton', $request->cod_canton)
+                        ->where('pa.estado_parroquia', 'U')
+                        ->selectRaw('COUNT(*) as total')
+                        ->get();
+
+
+        return response()->json(['status' => 'success', 'totalJuntasCantonesUrbanos' => $totalJuntasCantonesUrbanos]);
+
+    }
+
+    public function getTotalJuntasCantonesRurales(Request $request)
+    {
+        $totalJuntasCantonesRurales = DB::table('junta as j')
+                        ->join('zonas as zo', 'zo.idzona', 'j.fr_id_zona')
+                        ->join('parroquias as pa', 'pa.cod_parroquia', 'zo.cod_parroquia')
+                        ->join('cantones as ca', 'ca.cod_canton', 'pa.cod_canton')
+                        ->where('pa.cod_canton', $request->cod_canton)
+                        ->where('pa.estado_parroquia', 'R')
+                        ->selectRaw('COUNT(*) as total')
+                        ->get();
+
+
+        return response()->json(['status' => 'success', 'totalJuntasCantonesRurales' => $totalJuntasCantonesRurales]);
+
+    }
+
+    public function getTotalJuntasParroquia(Request $request)
+    {
+        $totalJuntasParroquia = DB::table('junta as ju')
+                                ->join('zonas as zo', 'zo.idzonas', 'ju.fr_id_zona')
+                                ->join('parroquias as pa', 'pa.cod_parroquia', 'zo.cod_parroquia')
+                                ->join('cantones as ca', 'ca.cod_canton', 'pa.cod_canton')
+                                ->where('pa.cod_parroquia', $request->cod_parroquia)
+                                ->selectRaw('COUNT(*) as total')
+                                ->get();
+
+        return response()->json(['status' => 'success', 'totalJuntasParroquia' => $totalJuntasParroquia]);
+    }
+
+    public function getTotalActasIngresadasParr(Request $request)
+    {
+        $totalActasIngresadasParr = DB::table('acta as a')
+                                    ->join('provincia as p', 'p.cne_cod_prov', 'a.cod_provincia')
+                                    ->join('cantones as c', 'c.cod_canton', 'a.cod_canton')
+                                    ->join('parroquias as pa', 'pa.cod_parroquia', 'a.cod_parroquia')
+                                    ->join('zonas as z', 'z.idzonas', 'a.cod_zona')
+                                    ->join('dignidad as d', 'd.iddignidad', 'a.fr_id_dignidad')
+                                    ->join('junta as j', 'j.idjunta', 'a.fr_id_junta')
+                                    ->join('usuario as us', 'us.idusuario', 'a.acta_usu_ing')
+                                    ->where('a.fr_id_dignidad', $request->iddignidad)
+                                    ->where('pa.cod_parroquia', $request->cod_parroquia)
+                                    ->selectRaw('COUNT(*) as digitadas')
+                                    ->get();
+
+        return response()->json(['status' => 'success', 'totalActasIngresadasParr' => $totalActasIngresadasParr]);
     }
 }

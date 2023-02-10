@@ -61,6 +61,21 @@ Route::post('/actas/export/excel', [ExportController::class, 'actaExportExcel'])
 
 Route::post('/actas/export/excel/todas', [ExportController::class, 'actaAllExportExcel']);
 
+Route::post('/actas/ingresadas/cantonal', [ActaController::class, 'getTotalActasIngresadasCanton']);
+
+Route::post('/juntas/totales/cantonal/urbano', [ActaController::class, 'getTotalJuntasCantonesUrbanos']);
+
+Route::post('/juntas/totales/cantonal/rural', [ActaController::class, 'getTotalJuntasCantonesRurales']);
+
+Route::post('/juntas/totales/parroquiales', [ActaController::class, 'getTotalJuntasParroquia']);
+
+Route::post('/actas/ingresadas/parroquiales', [ActaController::class, 'getTotalActasIngresadasParr']);
+
+
+
+
+
+
 
 
 
