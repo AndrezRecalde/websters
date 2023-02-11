@@ -212,7 +212,7 @@ const SearchConcejalesPage = () => {
                                 { totalJuntas[0]?.total -
                                     totalIngresadas[0]?.digitadas ===
                                 0 ? (
-                                    <Title order={3} mt={20}>
+                                    <Title order={4} mt={20}>
                                         <Text span c="green" inherit>
                                             100% Completado
                                         </Text>
