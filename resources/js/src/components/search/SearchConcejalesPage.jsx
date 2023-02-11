@@ -8,6 +8,7 @@ import {
     Group,
     Select,
     Text,
+    Title,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { IconDatabase, IconHelp } from "@tabler/icons";
@@ -211,37 +212,18 @@ const SearchConcejalesPage = () => {
                                 { totalJuntas[0]?.total -
                                     totalIngresadas[0]?.digitadas ===
                                 0 ? (
-                                    <Text
-                                        variant="gradient"
-                                        gradient={{
-                                            from: "teal",
-                                            to: "cyan",
-                                            deg: 45,
-                                        }}
-                                        sx={{
-                                            fontFamily:
-                                                "Greycliff CF, sans-serif",
-                                        }}
-                                        ta="center"
-                                        fz="xl"
-                                        fw={500}
-                                    >
-                                        Completado
-                                    </Text>
+                                    <Title order={3} mt={20}>
+                                        <Text span c="green" inherit>
+                                            100% Completado
+                                        </Text>
+                                    </Title>
                                 ) : (
-                                    <Text variant="gradient"
-                                    gradient={{
-                                        from: "red",
-                                        to: "red",
-                                        deg: 45,
-                                    }}
-                                    sx={{
-                                        fontFamily:
-                                            "Greycliff CF, sans-serif",
-                                    }}
-                                    ta="center"
-                                    fz="xl"
-                                    fw={500}>Faltan Actas de Ingresar</Text>
+                                    <Title order={4} mt={20}>
+                                        <Text span c="red" inherit>
+                                            Faltan { totalJuntas[0]?.total - totalIngresadas[0]?.digitadas } {" "}
+                                            Actas por ingresar
+                                        </Text>
+                                    </Title>
                                 )}
                             </Card>
                         </Flex>
