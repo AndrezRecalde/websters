@@ -225,7 +225,7 @@ const SearchJuntasPage = () => {
                                 0 ? (
                                     <Title order={4} mt={20}>
                                         <Text span c="green" inherit>
-                                            100% Completado
+                                            Actas 100% Ingresadas
                                         </Text>
                                     </Title>
                                 ) : (

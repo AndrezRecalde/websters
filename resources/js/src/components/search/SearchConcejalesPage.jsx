@@ -213,13 +213,13 @@ const SearchConcejalesPage = () => {
                                     totalIngresadas[0]?.digitadas ===
                                 0 ? (
                                     <Title order={4} mt={20}>
-                                        <Text span c="green" inherit>
-                                            100% Completado
+                                        <Text span c="green" align="center" inherit>
+                                            Actas 100% Ingresadas
                                         </Text>
                                     </Title>
                                 ) : (
                                     <Title order={4} mt={20}>
-                                        <Text span c="red" inherit>
+                                        <Text span c="red" align="center" inherit>
                                             Faltan { totalJuntas[0]?.total - totalIngresadas[0]?.digitadas } {" "}
                                             Actas por ingresar
                                         </Text>
