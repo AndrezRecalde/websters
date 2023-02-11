@@ -227,7 +227,32 @@ const WebsterTableConcejales = () => {
                 <tbody>{rows}</tbody>
             </Table>
             <Grid grow>
-                <Grid.Col span={6}>
+                <Grid.Col span={4}>
+                    <Card
+                        withBorder
+                        radius="md"
+                        p="xl"
+                        sx={(theme) => ({
+                            backgroundColor:
+                                theme.colorScheme === "dark"
+                                    ? theme.colors.dark[7]
+                                    : theme.white,
+                        })}
+                    >
+                        <Text
+                            size="xs"
+                            transform="uppercase"
+                            weight={700}
+                            color="dimmed"
+                        >
+                            Total de Huellas/Firmas
+                        </Text>
+                        <Text size="lg" weight={500}>
+                            {resultsConcejales[0].total_votos_validos}
+                        </Text>
+                    </Card>
+                </Grid.Col>
+                <Grid.Col span={4}>
                     <Card
                         withBorder
                         radius="md"
@@ -252,7 +277,7 @@ const WebsterTableConcejales = () => {
                         </Text>
                     </Card>
                 </Grid.Col>
-                <Grid.Col span={6}>
+                <Grid.Col span={4}>
                     <Card
                         withBorder
                         radius="md"

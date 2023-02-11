@@ -187,22 +187,13 @@ const WebsterTableJuntas = () => {
                     - {resultsJuntasParroquiales[0].nombre_parroquia}
                 </Text>
                 <Group position="center">
-                <Badge
-                    size="lg"
-                    radius="xl"
-                    color="teal"
-                >
-                    Total de candidatos a entrar: 5
-                </Badge>
+                    <Badge size="lg" radius="xl" color="teal">
+                        Total de candidatos a entrar: 5
+                    </Badge>
                 </Group>
             </Title>
             <Group position="center">
-                <Badge
-                    mt={3}
-                    size="lg"
-                    radius="xl"
-                    color="indigo"
-                >
+                <Badge mt={3} size="lg" radius="xl" color="indigo">
                     {`Fecha & Hora del reporte: ${fechaActual()}`}
                 </Badge>
             </Group>
@@ -231,7 +222,32 @@ const WebsterTableJuntas = () => {
                 <tbody>{rows}</tbody>
             </Table>
             <Grid grow>
-                <Grid.Col span={6}>
+                <Grid.Col span={4}>
+                    <Card
+                        withBorder
+                        radius="md"
+                        p="xl"
+                        sx={(theme) => ({
+                            backgroundColor:
+                                theme.colorScheme === "dark"
+                                    ? theme.colors.dark[7]
+                                    : theme.white,
+                        })}
+                    >
+                        <Text
+                            size="xs"
+                            transform="uppercase"
+                            weight={700}
+                            color="dimmed"
+                        >
+                            Total de Huellas/Firmas
+                        </Text>
+                        <Text size="lg" weight={500}>
+                            {resultsJuntasParroquiales[0].total_votos_validos}
+                        </Text>
+                    </Card>
+                </Grid.Col>
+                <Grid.Col span={4}>
                     <Card
                         withBorder
                         radius="md"
@@ -256,7 +272,7 @@ const WebsterTableJuntas = () => {
                         </Text>
                     </Card>
                 </Grid.Col>
-                <Grid.Col span={6}>
+                <Grid.Col span={4}>
                     <Card
                         withBorder
                         radius="md"
