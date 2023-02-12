@@ -3,6 +3,7 @@ import {
     Button,
     Card,
     Container,
+    Divider,
     Flex,
     Grid,
     Group,
@@ -18,10 +19,11 @@ import { useDignidadesStore } from "../../hooks/useDignidadesStore";
 import { useResultsStore } from "../../hooks/useResultsStore";
 import { useStatesStore } from "../../hooks/useStatesStore";
 import { useUiStore } from "../../hooks/useUiStore";
-import { EscConcejales } from "../escrutinio/EscConcejales";
+import { TotalEscrutinioPage } from "../escrutinio/TotalEscrutinioPage";
 
 import WebsterTableJuntas from "../table/WebsterTableJuntas";
 import { ModalHelp } from "../ui/ModalHelp";
+import { TotalesJuntasPage } from "./totales/TotalesJuntasPage";
 
 const SearchJuntasPage = () => {
     const {
@@ -114,22 +116,26 @@ const SearchJuntasPage = () => {
     };
 
     return (
-        <Container>
+        <Container size="xl">
+            <Title order={3} mt={20} align="center">
+                <Text span c="white" inherit>
+                    Resultados Webster Juntas Parroquiales
+                </Text>
+            </Title>
+            <Divider my="sm" />
             <Grid>
-                <Grid.Col span={8}>
+                <Grid.Col sm={12} md={4} lg={4}>
                     <Card
                         withBorder
                         shadow="sm"
                         p="lg"
-                        mt={50}
+                        mt={10}
                         radius="md"
                         sx={{ position: "static" }}
                     >
                         <Card.Section withBorder inheritPadding py="xs">
                             <Group position="apart">
-                                <Text weight={500}>
-                                    Webster - Juntas Parroquiales
-                                </Text>
+                                <Text weight={600}>Filtros</Text>
                                 <ActionIcon
                                     onClick={() => modalAction("open")}
                                     variant="subtle"
@@ -141,7 +147,7 @@ const SearchJuntasPage = () => {
 
                         <Card.Section inheritPadding mt="sm" pb="lg">
                             <Grid grow gutter="sm">
-                                <Grid.Col md={6} lg={4}>
+                                <Grid.Col sm={12} md={12} lg={12}>
                                     <Select
                                         disabled
                                         label="Dignidad"
@@ -159,7 +165,7 @@ const SearchJuntasPage = () => {
                                     />
                                 </Grid.Col>
 
-                                <Grid.Col md={6} lg={4}>
+                                <Grid.Col sm={12} md={12} lg={12}>
                                     <Select
                                         label="Cantón"
                                         placeholder="Seleccione un cantón"
@@ -176,7 +182,7 @@ const SearchJuntasPage = () => {
                                     />
                                 </Grid.Col>
 
-                                <Grid.Col md={6} lg={4}>
+                                <Grid.Col sm={12} md={12} lg={12}>
                                     <Select
                                         label="Parroquia"
                                         placeholder="Seleccione una Parroquia"
@@ -211,37 +217,55 @@ const SearchJuntasPage = () => {
                 </Grid.Col>
 
                 {resultsJuntasParroquiales.length > 0 ? (
-                    <Grid.Col span={4}>
-                        <Flex justify="center" align="center">
-                            <Card
-                                mt={20}
-                                shadow="sm"
-                                p="lg"
-                                sx={{ height: "400px", width: "600px" }}
-                            >
-                                <EscConcejales />
-                                {totalJuntas[0]?.total -
-                                    totalIngresadas[0]?.digitadas ===
-                                0 ? (
-                                    <Title order={4} mt={20}>
-                                        <Text span c="green" inherit>
-                                            Actas 100% Ingresadas
-                                        </Text>
-                                    </Title>
-                                ) : (
-                                    <Title order={4} mt={20}>
-                                        <Text span c="red" inherit>
-                                            Faltan{" "}
-                                            {totalJuntas[0]?.total -
-                                                totalIngresadas[0]
-                                                    ?.digitadas}{" "}
-                                            Actas por ingresar
-                                        </Text>
-                                    </Title>
-                                )}
-                            </Card>
-                        </Flex>
-                    </Grid.Col>
+                    <>
+                        <Grid.Col sm={12} md={4} lg={4}>
+                            <TotalesJuntasPage />
+                        </Grid.Col>
+                        <Grid.Col sm={12} md={4} lg={4}>
+                            <Flex justify="center" align="center">
+                                <Card
+                                    mt={10}
+                                    shadow="sm"
+                                    p="lg"
+                                    sx={{ height: "auto", width: "400px" }}
+                                >
+                                    <Card.Section
+                                        withBorder
+                                        inheritPadding
+                                        py="xs"
+                                    >
+                                        Total Actas
+                                    </Card.Section>
+                                    <Card.Section
+                                        withBorder
+                                        inheritPadding
+                                        py="xs"
+                                    >
+                                        <TotalEscrutinioPage />
+                                    </Card.Section>
+                                    {totalJuntas[0]?.total -
+                                        totalIngresadas[0]?.digitadas ===
+                                    0 ? (
+                                        <Title order={4} mt={20} align="center">
+                                            <Text span c="green" inherit>
+                                                Actas 100% Ingresadas
+                                            </Text>
+                                        </Title>
+                                    ) : (
+                                        <Title order={4} mt={20} align="center">
+                                            <Text span c="red" inherit>
+                                                Faltan{" "}
+                                                {totalJuntas[0]?.total -
+                                                    totalIngresadas[0]
+                                                        ?.digitadas}{" "}
+                                                Actas por ingresar
+                                            </Text>
+                                        </Title>
+                                    )}
+                                </Card>
+                            </Flex>
+                        </Grid.Col>
+                    </>
                 ) : null}
             </Grid>
             {resultsJuntasParroquiales.length > 0 ? (

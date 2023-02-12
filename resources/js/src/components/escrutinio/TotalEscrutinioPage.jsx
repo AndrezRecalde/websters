@@ -7,7 +7,7 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 
 
 
-export const EscConcejales = () => {
+export const TotalEscrutinioPage = () => {
 
     const { totalIngresadas, totalJuntas } = useActasStore();
 
@@ -31,6 +31,8 @@ export const EscConcejales = () => {
       };
 
   return (
-        <Pie data={data}/>
+        <Pie data={data} width={230}
+        height={230}
+        options={{maintainAspectRatio: false}}/>
   )
 }

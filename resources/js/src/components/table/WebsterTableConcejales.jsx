@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { Badge, Card, Grid, Group, Table, Text, Title } from "@mantine/core";
+import { Badge, Card, Divider, Grid, Group, Table, Text, Title } from "@mantine/core";
 import { useResultsStore } from "../../hooks/useResultsStore";
 
 const WebsterTableConcejales = () => {
@@ -185,7 +185,8 @@ const WebsterTableConcejales = () => {
 
     return (
         <>
-            <Title order={3} align="center" mt={50}>
+            <Divider my="sm" />
+            <Title order={3} align="center" mt={30}>
                 <Text span c="white" inherit>
                     {resultsConcejales[0].nombre_dignidad.toUpperCase()} -{" "}
                     {resultsConcejales[0].nombre_canton}
@@ -226,83 +227,6 @@ const WebsterTableConcejales = () => {
                 </thead>
                 <tbody>{rows}</tbody>
             </Table>
-            <Grid grow>
-                <Grid.Col span={4}>
-                    <Card
-                        withBorder
-                        radius="md"
-                        p="xl"
-                        sx={(theme) => ({
-                            backgroundColor:
-                                theme.colorScheme === "dark"
-                                    ? theme.colors.dark[7]
-                                    : theme.white,
-                        })}
-                    >
-                        <Text
-                            size="xs"
-                            transform="uppercase"
-                            weight={700}
-                            color="dimmed"
-                        >
-                            Total de Huellas/Firmas
-                        </Text>
-                        <Text size="lg" weight={500}>
-                            {resultsConcejales[0].total_votos_validos}
-                        </Text>
-                    </Card>
-                </Grid.Col>
-                <Grid.Col span={4}>
-                    <Card
-                        withBorder
-                        radius="md"
-                        p="xl"
-                        sx={(theme) => ({
-                            backgroundColor:
-                                theme.colorScheme === "dark"
-                                    ? theme.colors.dark[7]
-                                    : theme.white,
-                        })}
-                    >
-                        <Text
-                            size="xs"
-                            transform="uppercase"
-                            weight={700}
-                            color="dimmed"
-                        >
-                            Total Votos en Blanco
-                        </Text>
-                        <Text size="lg" weight={500}>
-                            {resultsConcejales[0].total_votos_blancos}
-                        </Text>
-                    </Card>
-                </Grid.Col>
-                <Grid.Col span={4}>
-                    <Card
-                        withBorder
-                        radius="md"
-                        p="xl"
-                        sx={(theme) => ({
-                            backgroundColor:
-                                theme.colorScheme === "dark"
-                                    ? theme.colors.dark[7]
-                                    : theme.white,
-                        })}
-                    >
-                        <Text
-                            size="xs"
-                            transform="uppercase"
-                            weight={700}
-                            color="dimmed"
-                        >
-                            Total Votos Nulos
-                        </Text>
-                        <Text size="lg" weight={500}>
-                            {resultsConcejales[0].total_votos_nulos}
-                        </Text>
-                    </Card>
-                </Grid.Col>
-            </Grid>
         </>
     );
 };
