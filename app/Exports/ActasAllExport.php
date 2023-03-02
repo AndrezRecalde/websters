@@ -39,7 +39,9 @@ class ActasAllExport implements FromCollection, WithHeadings, WithColumnWidths, 
             'H' => 20,
             'I' => 20,
             'J' => 20,
-            'K' => 30
+            'K' => 30,
+            'L' => 20,
+            'M' => 20
         ];
     }
 
@@ -56,6 +58,8 @@ class ActasAllExport implements FromCollection, WithHeadings, WithColumnWidths, 
         $sheet->getStyle('I1')->getFont()->setBold(true);
         $sheet->getStyle('J1')->getFont()->setBold(true);
         $sheet->getStyle('K1')->getFont()->setBold(true);
+        $sheet->getStyle('L1')->getFont()->setBold(true);
+        $sheet->getStyle('M1')->getFont()->setBold(true);
 
 
     }
@@ -64,6 +68,7 @@ class ActasAllExport implements FromCollection, WithHeadings, WithColumnWidths, 
     {
         return [
             'A' => NumberFormat::FORMAT_TEXT,
+            'M' => NumberFormat::FORMAT_TEXT,
         ];
     }
 
@@ -83,7 +88,9 @@ class ActasAllExport implements FromCollection, WithHeadings, WithColumnWidths, 
             'Votos Blancos',
             'Votos Nulos',
             'Cuadrada',
-            'Digitador'
+            'Digitador',
+            'Candidato',
+            'Total Votos'
         ];
     }
 
@@ -101,7 +108,9 @@ class ActasAllExport implements FromCollection, WithHeadings, WithColumnWidths, 
                                             acta.num_blancos,
                                             acta.num_nulos,
                                             acta.cuadrada,
-                                            usuario.nombres'))
+                                            usuario.nombres,
+                                            c.nombre,
+                                            ad.num_votos'))
                         ->join('dignidad as dignidad', 'dignidad.iddignidad', 'acta.fr_id_dignidad')
                         ->join('junta as junta1', 'acta.fr_id_junta', 'junta1.idjunta')
                         ->join('zonas as zonas', 'junta1.fr_id_zona', 'zonas.idzonas')
@@ -109,6 +118,10 @@ class ActasAllExport implements FromCollection, WithHeadings, WithColumnWidths, 
                         ->join('cantones as cantones', 'cantones.cod_canton', 'parroquias.cod_canton')
                         ->join('usuario as usuario', 'usuario.idusuario', 'acta.acta_usu_ing')
                         ->leftJoin('recintos as recintos', 'recintos.cod_recinto', 'junta1.cod_recinto')
+                        ->join('acta_detalle as ad', 'ad.fr_id_acta', 'acta.idacta')
+                        ->join('candidato as c', 'c.idcandidato', 'ad.fr_id_candidato')
+                        ->join('organizacion as o', 'o.idorganizacion', 'c.fr_id_organizacion')
+                        ->where('o.idorganizacion', 6)
                         ->dignidad($this->iddignidad)
                         ->canton($this->cod_canton)
                         ->parroquia($this->cod_parroquia)

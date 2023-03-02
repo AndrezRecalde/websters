@@ -40,7 +40,9 @@ class ActasExport implements FromCollection, WithHeadings, WithColumnWidths, Wit
             'H' => 20,
             'I' => 20,
             'J' => 20,
-            'K' => 30
+            'K' => 30,
+            'L' => 20,
+            'M' => 20
         ];
     }
 
